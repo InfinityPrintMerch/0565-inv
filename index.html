@@ -3,7 +3,7 @@
 <head>
     <!--
     ========================================================
-    Proyecto: Invitación XV Años (Web Interactiva)
+    Proyecto: Invitación XV Años (Web Interactiva - Tema Cenicienta)
     Desarrollador/Autor: Brayan Eduardo López Salinas
     ========================================================
     -->
@@ -11,17 +11,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis XV Años - Smiley Samara</title>
 
-    <!-- ICONO DE LA PESTAÑA (FAVICON) -->
     <link rel="icon" type="image/x-icon" href="icon.ico">
 
     <style>
-        /* --- ESTILOS BASE Y VARIABLES --- */
+        /* --- PALETA DE COLORES CENICIENTA --- */
         :root {
-            --color-oro: #d4af37;
-            --color-rosado: #fdf2f8;
-            --color-fondo-pc: #2b1820;
-            --color-texto: #5c3b24;
-            --color-borde: #b08e2f;
+            --color-principal: #89cff0; /* Azul celeste */
+            --color-secundario: #e3f2fd; /* Azul hielo muy claro */
+            --color-plata: #c0c0c0; /* Plateado */
+            --color-fondo-pc: #0a192f; /* Azul noche profundo para PC */
+            --color-texto: #1a365d; /* Azul marino oscuro para lectura */
+            --color-borde: #90caf9; /* Azul luminoso */
             --fuente-elegante: 'Playfair Display', serif;
             --fuente-normal: 'Open Sans', sans-serif;
         }
@@ -31,7 +31,6 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            /* Uso de dvh para que la barra de los celulares no oculte contenido */
             min-height: 100dvh;
             overflow: hidden;
             font-family: var(--fuente-normal);
@@ -39,16 +38,16 @@
             background-color: var(--color-fondo-pc);
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Open+Sans:wght@400;600&display=swap');
 
-        /* --- PRELOADER (PANTALLA DE CARGA) --- */
+        /* --- PRELOADER --- */
         #preloader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100dvh;
-            background: linear-gradient(135deg, var(--color-rosado), #fff);
+            background: linear-gradient(135deg, var(--color-secundario), #ffffff);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -60,8 +59,8 @@
         .spinner {
             width: 50px;
             height: 50px;
-            border: 5px solid rgba(212, 175, 55, 0.3);
-            border-top: 5px solid var(--color-oro);
+            border: 4px solid rgba(137, 207, 240, 0.3);
+            border-top: 4px solid var(--color-principal);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 20px;
@@ -70,7 +69,7 @@
         .texto-carga {
             font-family: var(--fuente-elegante);
             font-size: 1.5rem;
-            color: var(--color-borde);
+            color: var(--color-texto);
         }
 
         @keyframes spin {
@@ -78,7 +77,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* --- FONDO ANIMADO PARA PC (Brillos) --- */
+        /* --- FONDO ANIMADO PARA PC (Polvo de Hadas / Cristal) --- */
         .fondo-brillos {
             position: fixed;
             top: 0;
@@ -88,34 +87,34 @@
             z-index: 0;
             pointer-events: none;
             background-image:
-                radial-gradient(2px 2px at 20px 30px, #d4af37, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 20px 30px, var(--color-secundario), rgba(0,0,0,0)),
                 radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
-                radial-gradient(3px 3px at 90px 40px, #d4af37, rgba(0,0,0,0)),
+                radial-gradient(3px 3px at 90px 40px, var(--color-principal), rgba(0,0,0,0)),
                 radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2.5px 2.5px at 160px 120px, #d4af37, rgba(0,0,0,0)),
+                radial-gradient(2.5px 2.5px at 160px 120px, var(--color-secundario), rgba(0,0,0,0)),
                 radial-gradient(2px 2px at 200px 180px, #fff, rgba(0,0,0,0)),
-                radial-gradient(3px 3px at 250px 90px, #d4af37, rgba(0,0,0,0));
+                radial-gradient(3px 3px at 250px 90px, var(--color-principal), rgba(0,0,0,0));
             background-repeat: repeat;
             background-size: 300px 300px;
-            animation: destellosAnimados 8s linear infinite;
-            opacity: 0.8;
+            animation: destellosAnimados 10s linear infinite;
+            opacity: 0.6;
             display: none;
         }
 
         @keyframes destellosAnimados {
-            0% { transform: translateY(0); opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-300px); opacity: 0.5; }
+            0% { transform: translateY(0); opacity: 0.3; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-300px); opacity: 0.3; }
         }
 
-        /* --- PANTALLA DE INICIO (Para habilitar sonido) --- */
+        /* --- PANTALLA DE INICIO --- */
         #pantallaInicio {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100dvh;
-            background: linear-gradient(135deg, var(--color-rosado), #fff);
+            background: linear-gradient(135deg, var(--color-secundario), #ffffff);
             z-index: 200;
             display: flex;
             flex-direction: column;
@@ -127,29 +126,31 @@
 
         .texto-inicio {
             font-family: var(--fuente-elegante);
-            font-size: 2.5rem;
-            color: var(--color-borde);
+            font-size: 2.8rem;
+            color: var(--color-texto);
             margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         #botonEmpezar {
-            background-color: var(--color-oro);
+            background: linear-gradient(135deg, var(--color-principal), #5eb8e6);
             border: none;
             color: white;
-            padding: 15px 40px;
+            padding: 16px 45px;
             font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
             border-radius: 50px;
             text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 8px 20px rgba(137, 207, 240, 0.4);
+            transition: all 0.3s ease;
             font-family: var(--fuente-normal);
+            letter-spacing: 1px;
         }
 
         #botonEmpezar:hover {
-            background-color: var(--color-borde);
-            transform: scale(1.05);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(137, 207, 240, 0.6);
         }
 
         /* --- CONTENEDOR GLOBAL --- */
@@ -178,9 +179,9 @@
             left: 2%;
             width: 96%;
             height: 96%;
-            border: 4px solid;
-            border-image: linear-gradient(to bottom right, var(--color-oro), var(--color-borde), var(--color-oro)) 1;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4), inset 0 0 10px rgba(212, 175, 55, 0.3);
+            border: 3px solid;
+            border-image: linear-gradient(to bottom right, var(--color-plata), var(--color-principal), var(--color-secundario)) 1;
+            box-shadow: 0 0 20px rgba(137, 207, 240, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.2);
             z-index: 5;
             pointer-events: none;
             box-sizing: border-box;
@@ -192,14 +193,14 @@
             object-fit: cover;
         }
 
-        /* --- BOTÓN SALTAR VIDEO REDISEÑADO --- */
+        /* --- BOTÓN SALTAR VIDEO --- */
         #botonSaltar {
             position: absolute;
             top: 4%;
             right: 4%;
             z-index: 15;
-            background-color: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--color-oro);
+            background-color: rgba(10, 25, 47, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
             padding: 8px 18px;
             font-size: 0.95rem;
@@ -211,11 +212,12 @@
             gap: 8px;
             transition: all 0.3s ease;
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         #botonSaltar:hover {
-            background-color: var(--color-oro);
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+            background-color: rgba(137, 207, 240, 0.3);
+            border-color: var(--color-principal);
         }
 
         .icono-pequeno {
@@ -227,7 +229,7 @@
         /* --- CONTROLES DE VIDEO --- */
         .controles-personalizados {
             position: absolute;
-            bottom: 6%; /* Subido un poco para evitar cortes en móvil */
+            bottom: 6%;
             right: 4%;
             z-index: 10;
             display: flex;
@@ -235,9 +237,9 @@
         }
 
         .boton-control {
-            background-color: rgba(255, 255, 255, 0.8);
-            border: 2px solid var(--color-oro);
-            color: var(--color-texto);
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
             padding: 12px;
             cursor: pointer;
             border-radius: 50%;
@@ -245,13 +247,13 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .boton-control:hover {
-            background-color: var(--color-oro);
-            color: white;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
         }
 
         .icono {
@@ -260,20 +262,19 @@
             fill: currentColor;
         }
 
-        /* --- PANTALLA FINAL ANIMADA --- */
+        /* --- PANTALLA FINAL (ESTILO CRISTAL / GLASSMORPHISM) --- */
         #pantallaFinal {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--color-rosado), #fff);
+            background: linear-gradient(135deg, var(--color-secundario), #ffffff);
             z-index: 100;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
             opacity: 0;
             visibility: hidden;
             transition: opacity 1s ease, visibility 1s ease;
@@ -284,6 +285,22 @@
         #pantallaFinal.visible {
             opacity: 1;
             visibility: visible;
+        }
+
+        /* Tarjeta esmerilada central */
+        .tarjeta-cristal {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 40px 25px;
+            box-shadow: 0 10px 40px rgba(10, 25, 47, 0.08);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 340px;
         }
 
         .elemento-animado {
@@ -301,76 +318,105 @@
 
         .titulo-final {
             font-family: var(--fuente-elegante);
-            font-size: 2.5rem;
-            color: var(--color-borde);
-            margin-bottom: 15px;
-            animation-delay: 0.2s;
+            font-size: 2.6rem;
+            color: var(--color-texto);
+            margin: 0 0 10px 0;
+            animation-delay: 0.1s;
         }
 
         .subtitulo-final {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            color: var(--color-texto);
+            font-size: 1.05rem;
+            margin-bottom: 35px;
+            color: #3b5998;
+            animation-delay: 0.2s;
+            text-align: center;
+        }
+
+        /* --- BOTONES DE UBICACIÓN (IGLESIA Y SALÓN) --- */
+        .contenedor-botones-mapa {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
             animation-delay: 0.4s;
         }
 
-        #botonMaps {
-            background-color: var(--color-oro);
-            border: none;
-            color: white;
-            padding: 15px 30px;
-            font-size: 1.1rem;
+        .boton-ubicacion {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(137, 207, 240, 0.5);
+            color: var(--color-texto);
+            padding: 14px 20px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            border-radius: 50px;
-            text-transform: uppercase;
+            border-radius: 12px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 12px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-            animation-delay: 0.7s;
-            font-family: var(--fuente-normal);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        #botonMaps:hover {
-            background-color: var(--color-borde);
-            transform: translateY(-3px) scale(1.05);
+        .boton-ubicacion:hover {
+            background: #ffffff;
+            border-color: var(--color-principal);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(137, 207, 240, 0.2);
         }
 
+        /* Ajuste para los SVG externos que solicitaste */
         .icono-mapa {
-            width: 22px;
-            height: 22px;
-            fill: white;
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        /* --- LOGOTIPO DEL NEGOCIO --- */
+        .logo-negocio {
+            position: absolute;
+            bottom: 5dvh;
+            max-width: 65px; /* Tamaño discreto y elegante */
+            opacity: 0.6;
+            animation-delay: 0.8s;
+            transition: opacity 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .logo-negocio:hover {
+            opacity: 1;
         }
 
         /* --- MEDIA QUERIES --- */
         @media (min-width: 768px) {
             .fondo-brillos { display: block; }
             .contenedor-video-vertical {
-                height: 90vh; /* En PC dejamos margen */
+                height: 90vh;
                 max-width: 100vw;
-                aspect-ratio: 1062 / 1920; /* En PC mantenemos la proporción de caja */
+                aspect-ratio: 1062 / 1920;
                 width: auto;
                 border-radius: 20px;
             }
             .marco-video { border-radius: 15px; }
             #pantallaFinal { border-radius: 20px; }
-            .titulo-final { font-size: 3rem; }
+            .titulo-final { font-size: 3.2rem; }
+            .logo-negocio { bottom: 4vh; }
         }
 
         @media (max-width: 767px) {
             body { background-color: black; }
             .marco-video {
-                border-width: 3px;
-                width: 94%;
-                height: 96%;
-                top: 2%;
-                left: 3%;
+                border-width: 2px;
+                width: 95%;
+                height: 97%;
+                top: 1.5%;
+                left: 2.5%;
             }
             .controles-personalizados {
-                bottom: 8dvh; /* Evita cualquier barra de navegación táctil inferior */
+                bottom: 8dvh;
             }
         }
     </style>
@@ -386,7 +432,7 @@
     <!-- FONDO PC -->
     <div class="fondo-brillos"></div>
 
-    <!-- PANTALLA DE INICIO (Solución al bloqueo de sonido y Pantalla Completa) -->
+    <!-- PANTALLA DE INICIO -->
     <div id="pantallaInicio">
         <h2 class="texto-inicio">¡Estás Invitado!</h2>
         <button id="botonEmpezar">Abrir Invitación</button>
@@ -397,7 +443,7 @@
         <div class="contenedor-video-vertical">
 
 
-            <!-- BOTÓN PARA SALTAR VIDEO (Diseño renovado) -->
+            <!-- BOTÓN PARA SALTAR VIDEO -->
             <button id="botonSaltar">
                 Saltar
                 <svg class="icono-pequeno" viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg>
@@ -408,6 +454,7 @@
                 <source src="https://res.cloudinary.com/zgnbt2uz/video/upload/f_auto:video/video_uk1sfl?_s=vp" type="video/mp4">
             </video>
 
+            <!-- CONTROLES -->
             <div class="controles-personalizados">
                 <button id="botonPlayPause" class="boton-control" aria-label="Pausar/Reproducir">
                     <svg class="icono" id="iconoPause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h4z"/></svg>
@@ -417,21 +464,34 @@
                     <svg class="icono" id="iconoMute" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77zM3 9v6h4l5 5V4L7 9H3z"/></svg>
                     <svg class="icono" id="iconoUnmute" style="display: none;" viewBox="0 0 24 24"><path d="M3.63 3.63L2.36 4.9 7.47 10H3v4h4l5 5v-6.47l4.47 4.47c-.48.37-1.03.66-1.61.86v2.06c1.13-.25 2.19-.76 3.12-1.46l2.19 2.19 1.27-1.27-17.82-17.82zM12 4L9.91 6.09 12 8.18V4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                 </button>
-                <!-- NUEVO BOTÓN: PANTALLA COMPLETA -->
                 <button id="botonFullscreen" class="boton-control" aria-label="Pantalla Completa">
                     <svg class="icono" id="iconoExpand" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
                     <svg class="icono" id="iconoCompress" style="display: none;" viewBox="0 0 24 24"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
                 </button>
             </div>
 
-            <!-- PANTALLA FINAL -->
+            <!-- PANTALLA FINAL (DISEÑO CRISTAL) -->
             <div id="pantallaFinal">
-                <h1 class="titulo-final elemento-animado">¡Te Espero!</h1>
-                <p class="subtitulo-final elemento-animado">Acompáñame en este día tan especial.</p>
-                <a href="TU_URL_DE_GOOGLE_MAPS" id="botonMaps" class="elemento-animado" target="_blank">
-                    <svg class="icono-mapa" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                    Ver Ubicación
-                </a>
+                <div class="tarjeta-cristal elemento-animado">
+                    <h1 class="titulo-final">¡Te Espero!</h1>
+                    <p class="subtitulo-final">Acompáñame en este día tan especial y mágico.</p>
+
+                    <!-- BOTONES CON SVG EXTERNOS -->
+                    <div class="contenedor-botones-mapa">
+                        <a href="https://maps.app.goo.gl/D3e9swQXJ7bJi4yP6" class="boton-ubicacion" target="_blank">
+                            <img src="church.svg" class="icono-mapa" alt="Icono Iglesia">
+                            Ubicación Iglesia
+                        </a>
+
+                        <a href="https://maps.app.goo.gl/9KmzRUu7MV1zEyKy9" class="boton-ubicacion" target="_blank">
+                            <img src="party.svg" class="icono-mapa" alt="Icono Salón">
+                            Ubicación Salón
+                        </a>
+                    </div>
+                </div>
+
+                <!-- LOGOTIPO DEL NEGOCIO -->
+                <img src="arc_logo.png" alt="Logotipe" class="logo-negocio elemento-animado">
             </div>
 
         </div>
@@ -466,17 +526,16 @@
         const iconoExpand = document.getElementById('iconoExpand');
         const iconoCompress = document.getElementById('iconoCompress');
 
-        // --- INICIAR INVITACIÓN (Activa sonido y Pantalla Completa automática) ---
+        // --- INICIAR INVITACIÓN ---
         botonEmpezar.addEventListener('click', () => {
             pantallaInicio.style.opacity = '0';
             setTimeout(() => {
                 pantallaInicio.style.display = 'none';
             }, 500);
 
-            // Intentar pantalla completa automáticamente al empezar
             if (contenedorPrincipal.requestFullscreen) {
                 contenedorPrincipal.requestFullscreen().catch(err => console.log(err));
-            } else if (contenedorPrincipal.webkitRequestFullscreen) { /* Safari */
+            } else if (contenedorPrincipal.webkitRequestFullscreen) {
                 contenedorPrincipal.webkitRequestFullscreen();
             }
 
@@ -537,7 +596,6 @@
             }
         });
 
-        // Escuchar cambios de estado en pantalla completa para cambiar el icono
         document.addEventListener('fullscreenchange', actualizarIconoFullscreen);
         document.addEventListener('webkitfullscreenchange', actualizarIconoFullscreen);
 
