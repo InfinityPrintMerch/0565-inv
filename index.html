@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!--
+    ========================================================
+    Proyecto: Invitación XV Años (Web Interactiva)
+    Desarrollador/Autor: Brayan Eduardo López Salinas
+    ========================================================
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis XV Años - Invitación</title>
+    <style>
+        /* --- ESTILOS BASE Y VARIABLES --- */
+        :root {
+            --color-oro: #d4af37;
+            --color-rosado: #fdf2f8;
+            --color-fondo-pc: #2b1820;
+            --color-texto: #5c3b24;
+            --color-borde: #b08e2f;
+            --fuente-elegante: 'Playfair Display', serif;
+            --fuente-normal: 'Open Sans', sans-serif;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: var(--fuente-normal);
+            color: var(--color-texto);
+            background-color: var(--color-fondo-pc);
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;600&display=swap');
+
+        /* --- FONDO ANIMADO PARA PC (Brillos) --- */
+        .fondo-brillos {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, #d4af37, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(3px 3px at 90px 40px, #d4af37, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2.5px 2.5px at 160px 120px, #d4af37, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 200px 180px, #fff, rgba(0,0,0,0)),
+                radial-gradient(3px 3px at 250px 90px, #d4af37, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 300px 300px;
+            animation: destellosAnimados 8s linear infinite;
+            opacity: 0.8;
+            display: none;
+        }
+
+        @keyframes destellosAnimados {
+            0% { transform: translateY(0); opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-300px); opacity: 0.5; }
+        }
+
+        /* --- PANTALLA DE INICIO (Para habilitar sonido) --- */
+        #pantallaInicio {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-rosado), #fff);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .texto-inicio {
+            font-family: var(--fuente-elegante);
+            font-size: 2.5rem;
+            color: var(--color-borde);
+            margin-bottom: 30px;
+        }
+
+        #botonEmpezar {
+            background-color: var(--color-oro);
+            border: none;
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 50px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            font-family: var(--fuente-normal);
+        }
+
+        #botonEmpezar:hover {
+            background-color: var(--color-borde);
+            transform: scale(1.05);
+        }
+
+        /* --- CONTENEDOR GLOBAL --- */
+        .contenedor-pantalla {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .contenedor-video-vertical {
+            position: relative;
+            height: 100vh;
+            aspect-ratio: 1062 / 1920;
+            max-width: 100vw;
+            background-color: #000;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            overflow: hidden;
+        }
+
+        .marco-video {
+            position: absolute;
+            top: 2%;
+            left: 2%;
+            width: 96%;
+            height: 96%;
+            border: 4px solid;
+            border-image: linear-gradient(to bottom right, var(--color-oro), var(--color-borde), var(--color-oro)) 1;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4), inset 0 0 10px rgba(212, 175, 55, 0.3);
+            z-index: 5;
+            pointer-events: none;
+            box-sizing: border-box;
+        }
+
+        #videoPrincipal {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- BOTÓN SALTAR VIDEO --- */
+        #botonSaltar {
+            position: absolute;
+            top: 4%;
+            right: 4%;
+            z-index: 15;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--color-oro);
+            color: var(--color-texto);
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        #botonSaltar:hover {
+            background-color: var(--color-oro);
+            color: white;
+        }
+
+        /* --- CONTROLES DE VIDEO --- */
+        .controles-personalizados {
+            position: absolute;
+            bottom: 4%;
+            right: 4%;
+            z-index: 10;
+            display: flex;
+            gap: 10px;
+        }
+
+        .boton-control {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 2px solid var(--color-oro);
+            color: var(--color-texto);
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .boton-control:hover {
+            background-color: var(--color-oro);
+            color: white;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+        }
+
+        .icono {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* --- PANTALLA FINAL ANIMADA --- */
+        #pantallaFinal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-rosado), #fff);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease, visibility 1s ease;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #pantallaFinal.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .elemento-animado {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        #pantallaFinal.visible .elemento-animado {
+            animation: fadeInScale 0.8s ease forwards;
+        }
+
+        @keyframes fadeInScale {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .titulo-final {
+            font-family: var(--fuente-elegante);
+            font-size: 2.5rem;
+            color: var(--color-borde);
+            margin-bottom: 15px;
+            animation-delay: 0.2s;
+        }
+
+        .subtitulo-final {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: var(--color-texto);
+            animation-delay: 0.4s;
+        }
+
+        #botonMaps {
+            background-color: var(--color-oro);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 50px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            animation-delay: 0.7s;
+            font-family: var(--fuente-normal);
+        }
+
+        #botonMaps:hover {
+            background-color: var(--color-borde);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .icono-mapa {
+            width: 22px;
+            height: 22px;
+            fill: white;
+        }
+
+        /* --- MEDIA QUERIES --- */
+        @media (min-width: 768px) {
+            .fondo-brillos { display: block; }
+            .contenedor-video-vertical {
+                height: 90vh;
+                border-radius: 20px;
+            }
+            .marco-video { border-radius: 15px; }
+            #pantallaFinal { border-radius: 20px; }
+            .titulo-final { font-size: 3rem; }
+        }
+
+        @media (max-width: 767px) {
+            body { background-color: black; }
+            .marco-video {
+                border-width: 3px;
+                width: 94%;
+                height: 96%;
+                top: 2%;
+                left: 3%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FONDO PC -->
+    <div class="fondo-brillos"></div>
+
+    <!-- PANTALLA DE INICIO (Solución al bloqueo de sonido) -->
+    <div id="pantallaInicio">
+        <h2 class="texto-inicio">¡Estás Invitado!</h2>
+        <button id="botonEmpezar">Abrir Invitación</button>
+    </div>
+
+    <!-- ESTRUCTURA PRINCIPAL -->
+    <div class="contenedor-pantalla">
+        <div class="contenedor-video-vertical">
+
+
+            <!-- BOTÓN PARA SALTAR VIDEO -->
+            <button id="botonSaltar">Saltar Video ⏭</button>
+
+            <!-- VIDEO (Sin "autoplay" ni "muted" nativo, se controla con JS) -->
+            <video id="videoPrincipal" playsinline>
+                <source src="https://res.cloudinary.com/zgnbt2uz/video/upload/f_auto:video/video_uk1sfl?_s=vp" type="video/mp4">
+            </video>
+
+            <div class="controles-personalizados">
+                <button id="botonPlayPause" class="boton-control" aria-label="Pausar/Reproducir">
+                    <svg class="icono" id="iconoPause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h4z"/></svg>
+                    <svg class="icono" id="iconoPlay" style="display: none;" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+                <button id="botonVolumen" class="boton-control" aria-label="Silenciar/Activar Sonido">
+                    <svg class="icono" id="iconoMute" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77zM3 9v6h4l5 5V4L7 9H3z"/></svg>
+                    <svg class="icono" id="iconoUnmute" style="display: none;" viewBox="0 0 24 24"><path d="M3.63 3.63L2.36 4.9 7.47 10H3v4h4l5 5v-6.47l4.47 4.47c-.48.37-1.03.66-1.61.86v2.06c1.13-.25 2.19-.76 3.12-1.46l2.19 2.19 1.27-1.27-17.82-17.82zM12 4L9.91 6.09 12 8.18V4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                </button>
+            </div>
+
+            <!-- PANTALLA FINAL -->
+            <div id="pantallaFinal">
+                <h1 class="titulo-final elemento-animado">¡Te Espero!</h1>
+                <p class="subtitulo-final elemento-animado">Acompáñame en este día tan especial.</p>
+                <a href="TU_URL_DE_GOOGLE_MAPS" id="botonMaps" class="elemento-animado" target="_blank">
+                    <svg class="icono-mapa" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    Ver Ubicación
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('videoPrincipal');
+        const pantallaInicio = document.getElementById('pantallaInicio');
+        const botonEmpezar = document.getElementById('botonEmpezar');
+        const pantallaFinal = document.getElementById('pantallaFinal');
+        const botonSaltar = document.getElementById('botonSaltar');
+
+        const botonPlayPause = document.getElementById('botonPlayPause');
+        const iconoPlay = document.getElementById('iconoPlay');
+        const iconoPause = document.getElementById('iconoPause');
+        const botonVolumen = document.getElementById('botonVolumen');
+        const iconoMute = document.getElementById('iconoMute');
+        const iconoUnmute = document.getElementById('iconoUnmute');
+
+        // --- INICIAR INVITACIÓN (Activa el sonido) ---
+        botonEmpezar.addEventListener('click', () => {
+            pantallaInicio.style.opacity = '0'; // Efecto desvanecido
+            setTimeout(() => {
+                pantallaInicio.style.display = 'none';
+            }, 500); // Espera a que termine la transición
+
+            video.muted = false; // Sonido activado
+            video.play();
+
+            // Sincronizar iconos de la interfaz
+            iconoMute.style.display = 'block';
+            iconoUnmute.style.display = 'none';
+            iconoPlay.style.display = 'none';
+            iconoPause.style.display = 'block';
+        });
+
+        // --- SALTAR VIDEO ---
+        botonSaltar.addEventListener('click', () => {
+            video.pause(); // Detiene el video
+            mostrarPantallaFinal();
+        });
+
+        // --- CONTROLES MANUALES ---
+        botonPlayPause.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                iconoPlay.style.display = 'none';
+                iconoPause.style.display = 'block';
+            } else {
+                video.pause();
+                iconoPlay.style.display = 'block';
+                iconoPause.style.display = 'none';
+            }
+        });
+
+        botonVolumen.addEventListener('click', () => {
+            if (video.muted) {
+                video.muted = false;
+                iconoMute.style.display = 'block';
+                iconoUnmute.style.display = 'none';
+            } else {
+                video.muted = true;
+                iconoMute.style.display = 'none';
+                iconoUnmute.style.display = 'block';
+            }
+        });
+
+        // --- CUANDO TERMINA EL VIDEO NORMALMENTE ---
+        video.addEventListener('ended', mostrarPantallaFinal);
+
+        // --- FUNCIÓN PARA MOSTRAR PANTALLA FINAL ---
+        function mostrarPantallaFinal() {
+            // Ocultar controles y botón saltar
+            document.querySelector('.controles-personalizados').style.display = 'none';
+            botonSaltar.style.display = 'none';
+
+            // Mostrar la pantalla final animada
+            pantallaFinal.classList.add('visible');
+        }
+    </script>
+</body>
+</html>
